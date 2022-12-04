@@ -28,7 +28,7 @@ string RAWDIR = opt.RawDir ?? (Directory.Exists("../raw") ? "." : APPDIR);
 
 
 // Add SPACE to the list of characters
-images.Add(' ', new List<string>() { "../raw/_SYS/SPACE.png" });
+images.Add(' ', new List<string>() { RAWDIR + "/_SYS/SPACE.png" });
 
 // These chars can use same image.
 var reuse_chars = new (char, char)[] {
