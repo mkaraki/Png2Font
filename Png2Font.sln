@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "chart-generator", "chart-generator\chart-generator.csproj", "{B7EDD865-0E23-41CF-9514-8C55AF2F8CEA}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "build", "build\build.csproj", "{29FF54D0-54B8-4E67-8EF7-8E4487CECFE8}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B7EDD865-0E23-41CF-9514-8C55AF2F8CEA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B7EDD865-0E23-41CF-9514-8C55AF2F8CEA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B7EDD865-0E23-41CF-9514-8C55AF2F8CEA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B7EDD865-0E23-41CF-9514-8C55AF2F8CEA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{29FF54D0-54B8-4E67-8EF7-8E4487CECFE8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{29FF54D0-54B8-4E67-8EF7-8E4487CECFE8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{29FF54D0-54B8-4E67-8EF7-8E4487CECFE8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{29FF54D0-54B8-4E67-8EF7-8E4487CECFE8}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {4A79D58F-F41A-4982-B862-008B0C6EFA62}
+	EndGlobalSection
+EndGlobal
