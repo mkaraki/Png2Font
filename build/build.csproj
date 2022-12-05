@@ -13,6 +13,7 @@
     <None Include="_EMPTY.svg" CopyToOutputDirectory="PreserveNewest" />
     <PackageReference Include="BitmapToVector.SkiaSharp" Version="1.16.3" />
     <PackageReference Include="SkiaSharp" Version="2.88.3" />
+    <PackageReference Include="SkiaSharp.NativeAssets.Linux" Version="2.88.3" />
     <PackageReference Include="SkiaSharp.Svg" Version="1.60.0" />
 
     <ProjectReference Include="..\chart-generator\chart-generator.csproj" />
