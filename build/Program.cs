@@ -56,8 +56,9 @@ var skPaint = new SKPaint() {
 };
 foreach (var i in images)
 {
-    string from = Path.Combine(RAWDIR, i.Value[0]);
+    string from = i.Value[0];
     string dest = Methods.DestConv(i.Key);
+    Console.WriteLine($" [CONV] {from} => {dest}");
     using (var bitmap = SKBitmap.Decode(from))
     {
         var newSize = new SKImageInfo(bitmap.Info.Width, bitmap.Info.Height, SKColorType.Gray8, SKAlphaType.Opaque);
