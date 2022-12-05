@@ -57,8 +57,7 @@ namespace ChartGenerator
             if (opt == null)
                 (opt, _) = FilterOption.GetOptionsFromArgs(new string[] { });
 
-            string APPDIR = opt.RawDir ?? (Directory.Exists("../raw") ? "." : AppDomain.CurrentDomain.BaseDirectory);
-            string RAWDIR = Path.Combine(APPDIR, "..", "raw");
+            string RAWDIR = opt.RawDir ?? "../raw";
 
             var images = new SortedDictionary<char, List<(string, string[])>>();
 
