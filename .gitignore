@@ -397,16 +397,15 @@ FodyWeavers.xsd
 # JetBrains Rider
 *.sln.iml
 
-/output/*
-/resize/*
-/svg/*
-!/output/.gitkeep
-!/resize/.gitkeep
-!/svg/.gitkeep
-!/svg/_EMPTY.svg
+output/*
+!output/.gitkeep
+!svg/.gitkeep
+!svg/_EMPTY.svg
 
-/*.metadata.json
-/*.ttf
-/*sources.tsv
+*.metadata.json
+!_template_metadata.json
+*.ttf
+*sources.tsv
 
-/workdir
+workdir
+raw
