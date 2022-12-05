@@ -49,41 +49,29 @@ var reuse_chars = new (char, char)[] {
 };
 
 
-Console.WriteLine("Converting to Svg");
-var potraceParam = new PotraceParam();
-var skPaint = new SKPaint() {
-    Color = SKColors.Black
-};
+Console.WriteLine("Converting to Bitmap");
 foreach (var i in images)
 {
-    string from = i.Value[0];
     string dest = Methods.DestConv(i.Key);
-    Console.WriteLine($" [CONV] {from} => {dest}");
-    using (var bitmap = SKBitmap.Decode(from))
+    string from = i.Value[0];
+    var psi = new System.Diagnostics.ProcessStartInfo("convert", $"\"{from}\" -background white -alpha remove -alpha off -depth 8 -type Grayscale \"workdir/{dest}.bmp\"");
+    var p = System.Diagnostics.Process.Start(psi);
+    p.WaitForExit();
+    if (p.ExitCode != 0)
     {
-        var newSize = new SKImageInfo(bitmap.Info.Width, bitmap.Info.Height, SKColorType.Gray8, SKAlphaType.Opaque);
+        Console.Error.WriteLine($"Failed to convert \"{from}\" to \"workdir/{dest}.bmp\"");
+        Environment.Exit(1);
+    }
+}
 
-        using (var newSurface = SKSurface.Create(newSize))
-        using (var newCanvas = newSurface.Canvas)
-        {
-            newCanvas.Clear(SKColors.White);
-            newCanvas.DrawBitmap(bitmap, newSize.Rect);
-
-            newCanvas.Flush();
-
-            using (var newImage = newSurface.Snapshot())
-            using (var newBitmap = SKBitmap.FromImage(newImage))
-            using (var svgFs = new FileStream(Path.Combine("workdir", dest + ".svg"), FileMode.Create, FileAccess.Write))
-            using (var svgCanvas = SKSvgCanvas.Create(newSize.Rect, svgFs))
-            {
-                var gryphPathes = PotraceSkiaSharp.Trace(potraceParam, newBitmap);
-                foreach (var p in gryphPathes)
-                    svgCanvas.DrawPath(p, skPaint);
-
-                svgCanvas.Flush();
-                svgCanvas.Save();
-            }
-        }
+Console.WriteLine("Converting to SVG");
+{
+    var p = System.Diagnostics.Process.Start("sh", "-c \"potrace -s workdir/*.bmp\"");
+    p.WaitForExit();
+    if (p.ExitCode != 0)
+    {
+        Console.Error.WriteLine("Failed to convert to SVG");
+        Environment.Exit(1);
     }
 }
 
