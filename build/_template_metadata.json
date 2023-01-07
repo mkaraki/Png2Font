@@ -3,7 +3,7 @@
         "ascent": 800,
         "descent": 200,
         "em": 1000,
-        "family": "Sakamata Chloe Font"
+        "family": "/*FONTNAME*/"
     },
     "input": "workdir",
     "output": [

@@ -8,10 +8,12 @@ using SKSvg = SkiaSharp.Extended.Svg.SKSvg;
 (ChartGenerator.FilterOption opt, args) = ChartGenerator.FilterOption.GetOptionsFromArgs(args);
 
 string o_fname = "sakamata-v1";
+string o_fontname = "png2ttf Font";
 
 var opts = new Mono.Options.OptionSet()
 {
     { "f|filename=", "Output file name (without extension)", v => o_fname = v },
+    { "n|fontname=", "Output font family name", v => o_fontname = v }
 };
 opts.Parse(args);
 
@@ -95,6 +97,7 @@ foreach (var i in useImages)
 
 string template_meta = File.ReadAllText(Path.Combine(APPDIR, "_template_metadata.json"), System.Text.Encoding.UTF8)
     .Replace("/*GLYPHS*/", string.Join(",", import_json))
+    .Replace("/*FONTNAME*/", o_fontname)
     .Replace("/*FILENAME*/", o_fname);
 
 File.WriteAllText(o_fname + ".metadata.json", template_meta, new System.Text.UTF8Encoding(false));
