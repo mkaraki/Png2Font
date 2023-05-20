@@ -3,7 +3,8 @@
         "ascent": 800,
         "descent": 200,
         "em": 1000,
-        "family": "/*FONTNAME*/"
+        "family": "/*FONTNAME*/",
+        "encoding": "UnicodeBMP"
     },
     "input": "workdir",
     "output": [

@@ -9,18 +9,12 @@
 
   <ItemGroup>
     <None Include="svgs2ttf\**" CopyToOutputDirectory="PreserveNewest" />
+    <None Include="genfont" CopyToOutputDirectory="PreserveNewest" />
     <Compile Remove="workdir\**" />
     <EmbeddedResource Remove="workdir\**" />
     <None Remove="workdir\**" />
     <None Include="_template_metadata.json" CopyToOutputDirectory="PreserveNewest" />
     <None Include="_EMPTY.svg" CopyToOutputDirectory="PreserveNewest" />
-    <PackageReference Include="BitmapToVector.SkiaSharp" Version="1.16.3" />
-    <PackageReference Include="SkiaSharp" Version="2.88.3" />
-    <PackageReference Include="SkiaSharp.NativeAssets.Linux" Version="2.88.3" />
-    <PackageReference Include="SkiaSharp.NativeAssets.Linux.NoDependencies" Version="2.88.3" />
-    <PackageReference Include="SkiaSharp.NativeAssets.Win32" Version="2.88.3" />
-    <PackageReference Include="SkiaSharp.Svg" Version="1.60.0" />
-
     <ProjectReference Include="..\chart-generator\chart-generator.csproj" />
   </ItemGroup>
 

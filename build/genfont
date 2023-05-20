@@ -1,0 +1,82 @@
+#!/usr/bin/fontforge -script
+
+import sys
+import os.path
+import json
+
+IMPORT_OPTIONS = ('removeoverlap', 'correctdir')
+
+try:
+    unicode
+except NameError:
+    unicode = str
+
+def putObjectAttributeViaDict(obj, dct):
+    for k, v in dct.items():
+        if hasattr(obj, k):
+            if isinstance(v, list):
+                v = tuple(v)
+            setattr(obj, k, v)
+
+def addGlyphs(font, glyphs, inputDir):
+    for k, v in glyphs.items():
+        g = font.createChar(int(k, 0)) if k.startswith('0x') or k.isnumeric() else font.createMappedChar(k)
+
+        # Get outlines
+        if 'src' not in v:
+            continue
+
+        src = inputDir + os.path.sep + v.pop('src')
+        g.importOutlines(src, IMPORT_OPTIONS)
+        g.removeOverlap()
+
+        # Copy attributes
+        putObjectAttributeViaDict(g, v)
+
+def loadCfg(font, props):
+    if 'family' in props:
+        font.familyname = props.pop('family')
+
+        style = props.pop('style', 'Regular')
+        font.fontname = font.familyname + '-' + style
+        font.fullname = font.familyname + ' ' + style
+
+    if 'style' in props:
+        style = props.pop('style')
+
+    if 'encoding' not in props:
+        font.encoding = 'UnicodeFull'
+
+    putObjectAttributeViaDict(font, props)
+
+def main(config_file):
+    cfg = None
+    with open(config_file) as f:
+        cfg = json.load(f)
+        
+    if 'props' not in cfg or \
+        'output' not in cfg or \
+        'glyphs' not in cfg:
+        sys.stderr.write("Invalid config file\n")
+        exit(2)
+
+    os.chdir(os.path.dirname(config_file) or '.')
+
+    font = fontforge.font()
+
+    loadCfg(font, cfg['props'])
+
+    addGlyphs(font, cfg['glyphs'], cfg.get('input', '.'))
+
+    for outfile in cfg['output']:
+        sys.stderr.write('Generating %s...\n' % outfile)
+        font.generate(outfile)
+
+if __name__ == '__main__':
+    if len(sys.argv) > 1:
+        main(sys.argv[1])
+    else:
+        sys.stderr.write("Invalid usage\n")
+        exit(1)
+
+# vim: set filetype=python:

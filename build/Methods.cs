@@ -1,24 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-internal static class Methods
+﻿internal static class Methods
 {
-    public static void UseSameimage(char ref_c, char new_c, ref Dictionary<char, string> db)
-    {
-        if (!db.ContainsKey(ref_c)) return;
-        if (db.ContainsKey(new_c)) return;
+	public static void UseSameimage(char ref_c, char new_c, ref Dictionary<string, string> db)
+	{
+		string reuse_str = ref_c.ToString();
 
-        db.Add(new_c, db[ref_c]);
-    }
+		if (!db.ContainsKey(reuse_str)) return;
+		if (db.ContainsKey(reuse_str)) return;
 
-    public static string DestConv(char o) => DestConv(o.ToString());
+		db.Add(new_c.ToString(), db[reuse_str]);
+	}
 
-    public static string DestConv(string o)
-    {
-        return o.ToString()
-            .Replace(" ", "SPACE");
-    }
+	public static string DestConv(char o) => DestConv(o.ToString());
+
+	public static string DestConv(string o)
+	{
+		return o.ToString()
+			.Replace(" ", "SPACE");
+	}
 }

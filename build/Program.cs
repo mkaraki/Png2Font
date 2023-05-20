@@ -1,11 +1,4 @@
-﻿using BitmapToVector;
-using BitmapToVector.SkiaSharp;
-using SkiaSharp;
-using SkiaSharp.Extended.Svg;
-using System.IO;
-using SKSvg = SkiaSharp.Extended.Svg.SKSvg;
-
-(ChartGenerator.FilterOption opt, args) = ChartGenerator.FilterOption.GetOptionsFromArgs(args);
+﻿(ChartGenerator.FilterOption opt, args) = ChartGenerator.FilterOption.GetOptionsFromArgs(args);
 
 string o_fname = "sakamata-v1";
 string o_fontname = "png2ttf Font";
@@ -18,7 +11,7 @@ var opts = new Mono.Options.OptionSet()
 opts.Parse(args);
 
 var orig_files = ChartGenerator.CGProg.GetImages(opt);
-Dictionary<char, List<string>> images = orig_files.ToDictionary(c => c.Key, f => f.Value.Select(i => i.Item1).ToList());
+Dictionary<string, List<string>> images = orig_files.ToDictionary(c => c.Key, f => f.Value.Select(i => i.FilePath).ToList());
 var file_source = ChartGenerator.CGProg.GenSourceList(orig_files, false);
 
 string APPDIR = AppDomain.CurrentDomain.BaseDirectory;
@@ -35,7 +28,7 @@ string RAWDIR = opt.RawDir ?? "../raw";
 
 
 // Add SPACE to the list of characters
-images.Add(' ', new List<string>() { RAWDIR + "/_SYS/SPACE.png" });
+images.Add(" ", new List<string>() { RAWDIR + "/_SYS/SPACE.png" });
 
 // These chars can use same image.
 var reuse_chars = new (char, char)[] {
@@ -77,10 +70,10 @@ Console.WriteLine("Converting to SVG");
     }
 }
 
-Dictionary<char, string> useImages = images.ToDictionary(v => v.Key, v => Methods.DestConv(v.Key));
+Dictionary<string, string> useImages = images.ToDictionary(v => v.Key, v => Methods.DestConv(v.Key));
 
-useImages.Add('\r', "_EMPTY");
-useImages.Add('\n', "_EMPTY");
+useImages.Add("\r", "_EMPTY");
+useImages.Add("\n", "_EMPTY");
 
 foreach (var reuse_char in reuse_chars)
 {
@@ -90,8 +83,8 @@ foreach (var reuse_char in reuse_chars)
 List<string> import_json = new List<string>();
 foreach (var i in useImages)
 {
-    int char_int = Convert.ToInt32(i.Key);
-    string char_hex = $"0x{char_int:X}";
+    //string char_hex = @$"\\U{char.ConvertToUtf32(i.Value, 0):X8}";
+    string char_hex = @$"{char.ConvertToUtf32(i.Value, 0)}";
     import_json.Add($"\"{char_hex}\":{{\"src\":\"{i.Value}.svg\"}}");
 }
 
@@ -102,6 +95,6 @@ string template_meta = File.ReadAllText(Path.Combine(APPDIR, "_template_metadata
 
 File.WriteAllText(o_fname + ".metadata.json", template_meta, new System.Text.UTF8Encoding(false));
 
-System.Diagnostics.Process.Start(Path.Combine(APPDIR, "svgs2ttf/svgs2ttf"), o_fname + "\".metadata.json\"").WaitForExit();
+System.Diagnostics.Process.Start("fontforge", "-script " + '\"' + Path.Combine(APPDIR, "genfont") + "\" " + o_fname + "\".metadata.json\"").WaitForExit();
 
 File.WriteAllLines(o_fname + ".sources.tsv", file_source, System.Text.Encoding.UTF8);
