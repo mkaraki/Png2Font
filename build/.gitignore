@@ -407,6 +407,7 @@ FodyWeavers.xsd
 
 /*.metadata.json
 /*.ttf
+/*.woff2
 /*sources.tsv
 
 /workdir
