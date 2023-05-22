@@ -129,6 +129,8 @@ namespace ChartGenerator
                 if (!opt.NoAlt)
                     foreach (var v in images)
                     {
+                        if (!filterdImg.ContainsKey(v.Key))
+                            filterdImg.Add(v.Key, new List<FontImageInfo>());
                         filterdImg[v.Key].AddRange(v.Value);
                         filterdImg[v.Key] = filterdImg[v.Key]
                             .DistinctBy(x => x.FilePath)
