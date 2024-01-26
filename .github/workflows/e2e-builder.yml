@@ -43,4 +43,6 @@ jobs:
     - name: Check generated font
       run: |
         export GEN_FONT_FILEINFO=`ls -lh artifact-font.ttf`
+        echo '```' >> $GITHUB_STEP_SUMMARY
         echo "$GEN_FONT_FILEINFO" >> $GITHUB_STEP_SUMMARY
+        echo '```' >> $GITHUB_STEP_SUMMARY
