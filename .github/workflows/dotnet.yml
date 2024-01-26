@@ -1,0 +1,35 @@
+name: chart-generator E2E Test
+
+on:
+  push:
+  pull_request:
+    branches: [ "master" ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: 'chart-generator'
+
+    steps:
+    - uses: actions/checkout@v4
+    - uses: actions/checkout@v4
+      with:
+        repository: sakamata-ch/SakamataFontProject
+        path: 'testfixtures/fontdir'
+    
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: 6.0.x
+        
+    - name: Restore dependencies
+      run: dotnet restore
+    - name: Build
+      run: dotnet build --no-restore
+      
+    - name: Test chart generation
+      run: dotnet run -- --rawdir=../testfixtures/fontdir/raw
