@@ -28,6 +28,9 @@ jobs:
       uses: actions/setup-dotnet@v4
       with:
         dotnet-version: 6.0.x
+
+    - name: Setup font build requirements
+      run: sudo bash _install_reqs_ubuntu.sh
         
     - name: Restore dependencies
       run: dotnet restore
