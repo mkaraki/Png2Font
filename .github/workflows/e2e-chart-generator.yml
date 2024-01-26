@@ -35,7 +35,7 @@ jobs:
       run: dotnet run -- --rawdir=../testfixtures/fontdir/raw
 
     - name: Check generated char.tsv
-      run: head char.tsv
+      run: head output/char.tsv
 
     - name: Check generated file.tsv
-      run: head file.tsv
+      run: head output/file.tsv
