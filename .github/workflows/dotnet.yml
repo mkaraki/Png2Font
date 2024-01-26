@@ -33,3 +33,9 @@ jobs:
       
     - name: Test chart generation
       run: dotnet run -- --rawdir=../testfixtures/fontdir/raw
+
+    - name: Check generated char.tsv
+      run: head char.tsv
+
+    - name: Check generated file.tsv
+      run: head file.tsv
