@@ -51,7 +51,7 @@ jobs:
         export FILE_TSV_LINES=`wc -l output/file.tsv`
         export FILE_TSV_HEAD=`head output/file.tsv`
         echo "output/file.tsv returns $FILE_TSV_LINES lines." >> $GITHUB_STEP_SUMMARY
-        echo "Head 10 lines:\n\n\`\`\`tsv\n$FILE_TSV_HEAD\n\`\`\`\n\n" >> $GITHUB_STEP_SUMMARY
+        echo "Head 10 lines:" >> $GITHUB_STEP_SUMMARY
         echo '' >> $GITHUB_STEP_SUMMARY
         echo '```tsv' >> $GITHUB_STEP_SUMMARY
         echo "$FILE_TSV_HEAD" >> $GITHUB_STEP_SUMMARY
