@@ -22,7 +22,7 @@ jobs:
         path: __builder
 
     - name: Build
-      uses: ./.github/actions/build-ttf
+      uses: ./__builder/.github/actions/build-ttf
       with:
         raw-directory: raw
         filename-prefix: artifact-font
@@ -50,8 +50,12 @@ jobs:
       with:
         repository: sakamata-ch/SakamataFontProject
 
+    - uses: actions/checkout@v4
+      with:
+        path: png2ttf
+
     - name: Build
-      uses: ./.github/actions/build-ttf
+      uses: ./png2ttf/.github/actions/build-ttf
       with:
         raw-directory: raw
         filename-prefix: artifact-font-nf
