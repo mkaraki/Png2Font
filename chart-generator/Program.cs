@@ -193,6 +193,15 @@ namespace ChartGenerator
             return null;
         }
 
+        /// <summary>
+        /// This will extract string until tagEnd.
+        /// Example: `100] abc` -> `100`; `A} abc` -> `A`
+        /// If tagEnd not found, returns -1 as index and input string as info.
+        /// If tagEnd found, returns (captured index - 1, [for missing tag]) and captured string.
+        /// </summary>
+        /// <param name="search">input string</param>
+        /// <param name="tagEnd">tag End char. Like `]` or `}`</param>
+        /// <returns></returns>
         private static (int, string) GetStringInfoFromTag(string search, char tagEnd)
         {
             string info = string.Empty;
