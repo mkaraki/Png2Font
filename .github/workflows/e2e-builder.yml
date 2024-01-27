@@ -38,7 +38,7 @@ jobs:
       run: dotnet build --no-restore
       
     - name: Test build
-      run: dotnet run -- --rawdir=../testfixtures/fontdir/raw --filename=artifact-font --fontname=artifact
+      run: dotnet run -- --rawdir=../testfixtures/fontdir/raw --filename=artifact-font.ttf --fontname=artifact
 
     - name: Check generated font
       run: |
