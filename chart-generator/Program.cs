@@ -79,7 +79,6 @@ namespace ChartGenerator
 
             foreach (var f in files)
             {
-
                 // Get source file contains dir
                 string rawBaseDir = GetRawBaseDir(f, RAWDIR);
 

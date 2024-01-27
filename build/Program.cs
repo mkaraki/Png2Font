@@ -16,8 +16,8 @@ if (o_fname.ToLower().EndsWith(".ttf"))
 }
 
 var orig_files = ChartGenerator.CGProg.GetImages(opt);
-Dictionary<string, List<string>> images = orig_files.ToDictionary(c => c.Key, f => f.Value.Select(i => i.FilePath).ToList());
 var file_source = ChartGenerator.CGProg.GenSourceList(orig_files, false);
+Dictionary<string, List<string>> images = orig_files.ToDictionary(c => c.Key, f => f.Value.Select(i => i.FilePath).ToList());
 
 string APPDIR = AppDomain.CurrentDomain.BaseDirectory;
 string RAWDIR = opt.RawDir ?? "../raw";
@@ -89,7 +89,7 @@ List<string> import_json = new List<string>();
 foreach (var i in useImages)
 {
 	//string char_hex = @$"\\U{char.ConvertToUtf32(i.Value, 0):X8}";
-	string char_hex = @$"{char.ConvertToUtf32(i.Value, 0)}";
+	string char_hex = @$"{char.ConvertToUtf32(i.Key, 0)}";
 	import_json.Add($"\"{char_hex}\":{{\"src\":\"{i.Value}.svg\"}}");
 }
 
@@ -100,6 +100,8 @@ string template_meta = File.ReadAllText(Path.Combine(APPDIR, "_template_metadata
 
 File.WriteAllText(o_fname + ".metadata.json", template_meta, new System.Text.UTF8Encoding(false));
 
-System.Diagnostics.Process.Start("fontforge", "-script " + '\"' + Path.Combine(APPDIR, "genfont") + "\" " + o_fname + "\".metadata.json\"").WaitForExit();
+var fontforgeCmdArgs = "-script " + '\"' + Path.Combine(APPDIR, "genfont") + "\" \"" + o_fname + ".metadata.json\"";
+Console.WriteLine("$ fontforge " + fontforgeCmdArgs);
+System.Diagnostics.Process.Start("fontforge", fontforgeCmdArgs).WaitForExit();
 
 File.WriteAllLines(o_fname + ".sources.tsv", file_source, System.Text.Encoding.UTF8);
