@@ -46,7 +46,7 @@ runs:
 
     - name: Install requirements
       shell: bash
-      run: __builder/build/_install_reqs_ubuntu.sh
+      run: bash '__builder/build/_install_reqs_ubuntu.sh'
 
     - name: Setup .NET
       uses: actions/setup-dotnet@v4
@@ -55,9 +55,8 @@ runs:
 
     - name: Run build
       shell: bash
-      run: |
-        cd __builder/build
-        dotnet run -- --rawdir "${{ github.workspace }}/__to_build/${{ inputs.raw-directory }}" --weight ${{ inputs.weight }} --${{ inputs.strict }} --filename ${{ inputs.filename-prefix }}-${{ inputs.weight }}-${{ inputs.strict }} --fontname "${{ inputs.fontname }}"
+      working-directory: '__builder/build'
+      run: dotnet run -- --rawdir "${{ github.workspace }}/__to_build/${{ inputs.raw-directory }}" --weight ${{ inputs.weight }} --${{ inputs.strict }} --filename ${{ inputs.filename-prefix }}-${{ inputs.weight }}-${{ inputs.strict }} --fontname "${{ inputs.fontname }}"
 
     - name: Upload artifacts
       uses: actions/upload-artifact@v4
