@@ -142,6 +142,11 @@ namespace ChartGenerator
             return images;
         }
 
+        /// <summary>
+        /// Parse filename like `[100]{A}.png` or `{A} comment.png` to FontImageInfo
+        /// </summary>
+        /// <param name="fileName">Filename (with extension) to parse</param>
+        /// <returns>{arsed FontImageInfo. If fail (couldn't get `char`), returns null.</returns>
         private static FontImageInfo? GetFontImageInfoFromFileName(string fileName)
         {
             string fn = Path.GetFileNameWithoutExtension(fileName);
