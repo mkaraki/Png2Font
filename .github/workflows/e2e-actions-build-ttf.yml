@@ -1,0 +1,43 @@
+# This workflow will build a .NET project
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-net
+
+name: E2E actions build-ttf
+
+on:
+  push:
+  pull_request:
+    branches: [ "master" ]
+
+jobs:
+  with-this-version-of-builder:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        repository: sakamata-ch/SakamataFontProject
+
+    - uses: actions/checkout@v4
+      with:
+        path: __builder
+
+    - name: Build
+      uses: ./__builder/.github/actions/build-ttf
+      with:
+        raw-directory: raw
+        filename-prefix: artifact-font
+        fontname: artifact
+        skip-builder-download: true
+    
+    - name: Download generated font
+      uses: actions/download-artifact@v4
+      with:
+        name: artifact-font-0-nostrict
+        path: artifact-font
+
+    - name: Check generated font
+      run: |
+        export GEN_FONT_FILEINFO=`ls -lh artifact-font/artifact-font-0-nostrict.ttf`
+        echo '```' >> $GITHUB_STEP_SUMMARY
+        echo "$GEN_FONT_FILEINFO" >> $GITHUB_STEP_SUMMARY
+        echo '```' >> $GITHUB_STEP_SUMMARY
