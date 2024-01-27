@@ -1,5 +1,5 @@
 name: "png2font/build-ttf"
-description: "Build TTF font from Png2Ttf raw directory"
+description: "Build TTF font from Png2Font raw directory"
 
 inputs:
   strict:
@@ -29,7 +29,7 @@ inputs:
   skip-builder-download:
     default: "false"
     required: false
-    description: "Skip builder download. You must put Png2Ttf repository in __builder directory"
+    description: "Skip builder download. You must put Png2Font repository in __builder directory"
 
 runs:
   using: "composite"
