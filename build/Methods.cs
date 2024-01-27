@@ -10,11 +10,15 @@
 		db.Add(new_c.ToString(), db[reuse_str]);
 	}
 
-	public static string DestConv(char o) => DestConv(o.ToString());
+	public static string DestConv(char o) => DestConv(((ulong)o).ToString("X"));
 
 	public static string DestConv(string o)
 	{
-		return o.ToString()
-			.Replace(" ", "SPACE");
+		if (o == " ") return "SPACE";
+
+		if (o.Length <= 1)
+			return DestConv(o[0]);
+
+		return o.ToString();
 	}
 }
