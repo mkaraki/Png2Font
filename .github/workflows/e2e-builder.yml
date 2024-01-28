@@ -46,3 +46,16 @@ jobs:
         echo '```' >> $GITHUB_STEP_SUMMARY
         echo "$GEN_FONT_FILEINFO" >> $GITHUB_STEP_SUMMARY
         echo '```' >> $GITHUB_STEP_SUMMARY
+        echo '' >> $GITHUB_STEP_SUMMARY
+
+    - name: Check generated char.tsv
+      run: |
+        export SRC_TSV_LINES=`wc -l artifact-font.sources.tsv`
+        export SRC_TSV_HEAD=`head artifact-font.sources.tsv`
+        echo "artifact-font.sources.tsv returns $SRC_TSV_LINES lines." >> $GITHUB_STEP_SUMMARY
+        echo "Head 10 lines:" >> $GITHUB_STEP_SUMMARY
+        echo '' >> $GITHUB_STEP_SUMMARY
+        echo '```tsv' >> $GITHUB_STEP_SUMMARY
+        echo "$SRC_TSV_HEAD" >> $GITHUB_STEP_SUMMARY
+        echo '```' >> $GITHUB_STEP_SUMMARY
+        echo '' >> $GITHUB_STEP_SUMMARY
