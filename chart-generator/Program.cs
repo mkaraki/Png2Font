@@ -99,7 +99,7 @@ namespace ChartGenerator
                 else
                 {
                     // If not, try get
-                    var mdFii = GetMetadataFromSourceFile(Path.Combine(f, "source.yml"));
+                    var mdFii = GetMetadataFromSourceFile(Path.Combine(rawBaseDir, "source.yml"));
 
                     // If successfully get info, apply and cache
                     if (mdFii.HasValue)
