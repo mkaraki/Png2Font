@@ -22,7 +22,7 @@ jobs:
         path: png2ttf
 
     - name: Build
-      uses: ./__builder/builder-ghaction
+      uses: ./png2ttf/__builder/builder-ghaction
       with:
         raw-directory: raw
         filename-prefix: artifact-font-nf
