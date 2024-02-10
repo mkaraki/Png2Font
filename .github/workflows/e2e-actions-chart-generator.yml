@@ -1,4 +1,4 @@
-name: E2E actions chart-generator
+name: E2E actions chart-generator (actions)
 
 on:
   push:
