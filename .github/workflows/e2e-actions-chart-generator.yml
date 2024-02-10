@@ -6,7 +6,7 @@ on:
     branches: [ "master" ]
 
 jobs:
-  with-this-version-of-builder:
+  with-this-version-of-chart-generator:
     runs-on: ubuntu-latest
 
     steps:
