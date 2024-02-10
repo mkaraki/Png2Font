@@ -19,7 +19,7 @@ jobs:
         path: png2ttf
 
     - name: Build
-      uses: ./png2ttf/__builder/chart-generator-ghaction
+      uses: ./png2ttf/chart-generator-ghaction
       with:
         raw-directory: raw
         upload-name: artifact-font-chart
