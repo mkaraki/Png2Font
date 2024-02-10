@@ -23,7 +23,6 @@ jobs:
       with:
         raw-directory: raw
         upload-name: artifact-font-chart
-        skip-builder-download: true
 
     - name: Download generated font
       uses: actions/download-artifact@v4
