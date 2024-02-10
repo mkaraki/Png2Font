@@ -22,7 +22,7 @@ jobs:
         path: __builder
 
     - name: Build
-      uses: ./__builder/.github/actions/build-ttf
+      uses: ./__builder/builder-ghaction
       with:
         raw-directory: raw
         filename-prefix: artifact-font

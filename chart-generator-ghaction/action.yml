@@ -1,0 +1,58 @@
+name: "png2font/build-ttf"
+description: "Build TTF font from Png2Font raw directory"
+
+inputs:
+  strict:
+    default: "nostrict"
+    required: false
+    description: "Strict or not strict"
+  weight:
+    default: "0"
+    required: false
+    description: "Font weight"
+  raw-directory:
+    default: "raw"
+    required: false
+    description: "Raw directory"
+  builder-version:
+    default: "master"
+    required: false
+    description: "Builder version"
+  skip-builder-download:
+    default: "false"
+    required: false
+    description: "Skip builder download. You must put Png2Font repository in __builder directory"
+  upload-name:
+    default: "charts-info"
+    required: false
+    description: "Upload name"
+
+runs:
+  using: "composite"
+  steps:
+    - name: Download builder
+      if: ${{ inputs.skip-builder-download != 'true' }}
+      uses: actions/checkout@v4
+      with:
+        repository: mkaraki/Png2Font
+        path: __builder
+        ref: ${{ inputs.builder-version }}
+        fetch-depth: 0
+        submodules: recursive
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: 6.0.x
+
+    - name: Run chart-generator
+      shell: bash
+      working-directory: '__builder/chart-generator'
+      run: dotnet run -- --rawdir "${{ github.workspace }}/${{ inputs.raw-directory }}" --weight ${{ inputs.weight }} --${{ inputs.strict }}
+
+    - name: Upload charts info
+      uses: actions/upload-artifact@v4
+      with:
+        name: ${{ inputs.upload-name }}
+        path: |
+          __builder/chart-generator/output/*

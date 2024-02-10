@@ -1,0 +1,56 @@
+name: E2E actions chart-generator (actions)
+
+on:
+  push:
+  pull_request:
+    branches: [ "master" ]
+
+jobs:
+  with-this-version-of-chart-generator:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        repository: sakamata-ch/SakamataFontProject
+
+    - uses: actions/checkout@v4
+      with:
+        path: __builder
+
+    - name: Build
+      uses: ./__builder/chart-generator-ghaction
+      with:
+        raw-directory: raw
+        upload-name: artifact-font-chart
+        skip-builder-download: true
+
+    - name: Download generated font
+      uses: actions/download-artifact@v4
+      with:
+        name: artifact-font-chart
+        path: output-dl
+
+    - name: Check generated char.tsv
+      run: |
+        export CHAR_TSV_LINES=`wc -l output-dl/char.tsv`
+        export CHAR_TSV_HEAD=`head output-dl/char.tsv`
+        echo "output-dl/char.tsv returns $CHAR_TSV_LINES lines." >> $GITHUB_STEP_SUMMARY
+        echo "Head 10 lines:" >> $GITHUB_STEP_SUMMARY
+        echo '' >> $GITHUB_STEP_SUMMARY
+        echo '```tsv' >> $GITHUB_STEP_SUMMARY
+        echo "$CHAR_TSV_HEAD" >> $GITHUB_STEP_SUMMARY
+        echo '```' >> $GITHUB_STEP_SUMMARY
+        echo '' >> $GITHUB_STEP_SUMMARY
+
+    - name: Check generated file.tsv
+      run: |
+        export FILE_TSV_LINES=`wc -l output-dl/file.tsv`
+        export FILE_TSV_HEAD=`head output-dl/file.tsv`
+        echo "output-dl/file.tsv returns $FILE_TSV_LINES lines." >> $GITHUB_STEP_SUMMARY
+        echo "Head 10 lines:" >> $GITHUB_STEP_SUMMARY
+        echo '' >> $GITHUB_STEP_SUMMARY
+        echo '```tsv' >> $GITHUB_STEP_SUMMARY
+        echo "$FILE_TSV_HEAD" >> $GITHUB_STEP_SUMMARY
+        echo '```' >> $GITHUB_STEP_SUMMARY
+        echo '' >> $GITHUB_STEP_SUMMARY
